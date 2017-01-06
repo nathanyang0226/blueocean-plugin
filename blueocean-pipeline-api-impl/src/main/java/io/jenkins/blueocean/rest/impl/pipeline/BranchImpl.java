@@ -29,6 +29,7 @@ import static io.jenkins.blueocean.rest.model.KnownCapabilities.JENKINS_WORKFLOW
 public class BranchImpl extends PipelineImpl {
 
     private static final String PULL_REQUEST = "pullRequest";
+    private static final String URL = "url";
 
     private final Link parent;
     protected final Job job;
@@ -55,6 +56,15 @@ public class BranchImpl extends PipelineImpl {
             );
         }
         return null;
+    }
+
+    @Exported(name = URL)
+    public String getUrl() {
+        ObjectMetadataAction om = job.getAction(ObjectMetadataAction.class);
+        if (om == null) {
+            return null;
+        }
+        return  om.getObjectUrl() != null ? om.getObjectUrl() : null;
     }
 
     @Override
